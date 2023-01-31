@@ -9,7 +9,10 @@ class Element {
         int y;
         sf::Color color;
 
-        virtual void Update() = 0;
-        virtual void Draw() = 0;
+        Element(int x, int y) {
+            
+        }
+
+        virtual void Update();
 };
 #endif

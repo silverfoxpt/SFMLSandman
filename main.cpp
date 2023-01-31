@@ -5,31 +5,18 @@
 #include <map>
 
 #include "Element.h"
+#include "Drawboard.h"
 
-const int rows = 512, cols = 512;
-sf::Uint8 f[rows][4 * cols];
-
-void Initialize() {
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            if (j % 2 == 0) {
-                //white
-                f[i][j] = f[i][j+1] = f[i][j+2] = f[i][j+3] = 255;
-            } else {
-                f[i][j] = f[i][j+1] = f[i][j+2] = 0;
-                f[i][j+3] = 255;
-            }
-        }
-    }
-}
+//public vars
+Drawboard myBoard;
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!");
 
-    Initialize();
-    sf::Image img; img.create(cols, rows, f);
-    sf::RenderTexture tex; tex.create(cols, rows); tex.clear(); tex.draw(img); tex.display();
+    myBoard.Test();
+    myBoard.ApplyToArray();
+    sf::Sprite spr = myBoard.ConvertToSprite();
 
     while (window.isOpen())
     {
@@ -43,7 +30,7 @@ int main()
         window.clear();
 
         //do shit here
-        window.draw(img);
+        window.draw(spr);
 
         window.display();
     }
