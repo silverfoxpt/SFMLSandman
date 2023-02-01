@@ -9,7 +9,7 @@ class MovableSolid : public Solid{
 
         }
 
-        virtual void step() {
+        void step() {
             
         }
 };

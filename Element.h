@@ -14,6 +14,6 @@ class Element {
 
         Element(int x, int y, Block::BlockID id);
 
-        virtual void Update();
+        virtual void step() = 0;
 };
 #endif
