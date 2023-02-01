@@ -10,7 +10,7 @@ void Drawboard::Test() {
 
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            if (j % 8 == 0 || j % 8 == 3 || j % 8 == 7) {
+            if (j % 8 == 0 || j % 8 == 3 || j % 8 == 2 || j % 8 == 1) {
                 //rand
                 this->pixels[i][j*4]    = dist6(rng);
                 this->pixels[i][j*4+1]  = dist6(rng);

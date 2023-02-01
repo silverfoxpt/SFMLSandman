@@ -4,8 +4,7 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "D:\\SFML-2.5.1\\include",
-                "D:/SFML-2.5.1/include"
+                "D:\\SFML-2.5.1\\include"
             ],
             "defines": [
                 "_DEBUG",
@@ -13,9 +12,9 @@
                 "_UNICODE"
             ],
             "cStandard": "c11",
-            "cppStandard": "gnu++14",
+            "cppStandard": "c++14",
             "intelliSenseMode": "windows-gcc-x64",
-            "configurationProvider": "ms-vscode.makefile-tools"
+            "configurationProvider": "ms-vscode.cpptools"
         }
     ],
     "version": 4
