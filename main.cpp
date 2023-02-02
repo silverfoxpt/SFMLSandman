@@ -12,6 +12,18 @@
 //public vars
 Drawboard myBoard;
 
+void Test() {
+    //test
+    {
+        MovableSolid tmp(102, 301, Block::BlockID::Sand, &myBoard);
+        std::shared_ptr<Element> ptr = std::make_shared<MovableSolid>(tmp);
+        myBoard.setElement(tmp.x, tmp.y, ptr);
+    }
+    
+    MovableSolid* tmp2 = dynamic_cast<MovableSolid*>(myBoard.getElement(102, 301).get());
+    std::cout << tmp2->x << " " << tmp2->y << " " << tmp2->checker << '\n';
+}
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!");
@@ -20,12 +32,7 @@ int main()
     myBoard.ApplyToArray();
     sf::Sprite spr = myBoard.ConvertToSprite();
 
-    //
-    MovableSolid tmp(0, 2, Block::BlockID::Sand, &myBoard);
-    std::shared_ptr<Element> ptr = std::make_shared<MovableSolid>(tmp);
-    
-    MovableSolid* tmp2 = dynamic_cast<MovableSolid*>(ptr.get());
-    std::cout << tmp2->x << " " << tmp2->y << " " << tmp2->checker << '\n';
+    Test();
 
     while (window.isOpen())
     {

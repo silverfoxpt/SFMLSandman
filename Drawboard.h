@@ -16,7 +16,7 @@
 
 #include "Element.h"
 
-class Drawboard;
+class Element;
 
 class Drawboard {
     public:
@@ -39,5 +39,4 @@ class Drawboard {
 
         sf::Texture tmpTex;
 };
-
 #endif
