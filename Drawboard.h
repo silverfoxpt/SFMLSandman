@@ -12,11 +12,25 @@
 #include <cstdlib>
 #include <ctime>
 
+#include <memory>
+
+#include "Element.h"
+
+class Drawboard;
+
 class Drawboard {
     public:
+        Drawboard();
+
         void Test();
         void ApplyToArray();
+
+        std::shared_ptr<Element> getElement(int x, int y);
+        void setElement(int x, int y, std::shared_ptr<Element> sh);
+
         sf::Sprite ConvertToSprite();
+
+        std::vector<std::vector<std::shared_ptr<Element>>> modBox;
 
     private:    
         const static int rows = 512, cols = 512;

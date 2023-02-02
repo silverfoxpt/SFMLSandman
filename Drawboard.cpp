@@ -1,5 +1,26 @@
 #include "Drawboard.h"
 
+Drawboard::Drawboard() {
+    for (int i = 0; i < this->rows; i++) {
+        this->modBox.push_back(std::vector<std::shared_ptr<Element>>());
+        for (int j = 0; j < this->cols; j++) {
+            this->modBox[i].push_back(nullptr);
+        }
+    }
+}
+
+std::shared_ptr<Element> Drawboard::getElement(int x, int y) {
+    if (x < 0 || y < 0 || x >= this->rows || y >= this->cols) {return nullptr;}
+
+    return this->modBox[x][y];   
+}
+
+void Drawboard::setElement(int x, int y, std::shared_ptr<Element> sh) {
+    if (x < 0 || y < 0 || x >= this->rows || y >= this->cols) {return;}
+
+    this->modBox[x][y] = sh;
+}
+
 void Drawboard::Test() {
     srand (static_cast <unsigned> (time(0)));
 

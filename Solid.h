@@ -6,7 +6,7 @@
 
 class Solid : public Element {
     public:
-        Solid(int x, int y, Block::BlockID id) : Element(x, y, id) {
+        Solid(int x, int y, Block::BlockID id, Drawboard *drawboard) : Element(x, y, id, drawboard) {
             //nothing here...   
         }
 };

@@ -5,13 +5,12 @@
 
 class MovableSolid : public Solid{
     public:
-        MovableSolid(int x, int y, Block::BlockID id) : Solid(x, y, id) {
-
+        MovableSolid(int x, int y, Block::BlockID id, Drawboard *drawboard) : Solid(x, y, id, drawboard) {
+            this->checker = 988;
         }
 
-        void step() {
-            
-        }
+        void step() override;
+        int checker;
 };
 
 #endif
