@@ -14,18 +14,21 @@ Drawboard myBoard;
 
 void Test() {
     //test
-    {
-        MovableSolid tmp(102, 301, Block::BlockID::Sand, &myBoard);
-        std::shared_ptr<Element> ptr = std::make_shared<MovableSolid>(tmp);
-        myBoard.setElement(tmp.x, tmp.y, ptr);
+    for (int i = 0; i < 200; i++) {
+        for (int j = 0; j < 100; j++) {
+            MovableSolid tmp(102, 301, Block::BlockID::Sand, &myBoard);
+            std::shared_ptr<Element> ptr = std::make_shared<MovableSolid>(tmp);
+
+            myBoard.setElement(i, j, ptr);
+        }
     }
     
-    MovableSolid* tmp2 = dynamic_cast<MovableSolid*>(myBoard.getElement(102, 301).get());
-    std::cout << tmp2->x << " " << tmp2->y << " " << tmp2->checker << '\n';
+    //MovableSolid* tmp2 = dynamic_cast<MovableSolid*>(myBoard.getElement(102, 301).get());
+    //std::cout << tmp2->x << " " << tmp2->y << " " << tmp2->checker << '\n';
 }
 
 void Test2() {
-    myBoard.Test();
+    myBoard.Convert2DPointerTo2DArray();
     myBoard.Convert2DArrayTo1DArray();
 }
 
