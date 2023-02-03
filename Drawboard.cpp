@@ -67,3 +67,19 @@ sf::Sprite Drawboard::ConvertToSprite() {
     
     return spr;
 }
+
+bool Drawboard::isLastRow(int x) {
+    return x == this->rows-1;
+}
+
+bool Drawboard::isFirstRow(int x) {
+    return x == 0;
+}
+
+bool Drawboard::isLastCol(int y) {
+    return y == this->cols-1;
+}
+
+bool Drawboard::isFirstCol(int y) {
+    return y == 0;
+}

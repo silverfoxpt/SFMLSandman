@@ -20,20 +20,25 @@ class Element;
 
 class Drawboard {
     public:
+        const static int rows = 512, cols = 512;
+        std::vector<std::vector<std::shared_ptr<Element>>> modBox;
+
         Drawboard();
 
         void Test();
-        void ApplyToArray();
+        void ConvertArrayTo1D();
+        sf::Sprite ConvertToSprite();
 
         std::shared_ptr<Element> getElement(int x, int y);
         void setElement(int x, int y, std::shared_ptr<Element> sh);
 
-        sf::Sprite ConvertToSprite();
-
-        std::vector<std::vector<std::shared_ptr<Element>>> modBox;
+        //nice options to have
+        bool isLastRow(int x);
+        bool isFirstRow(int x);
+        bool isLastCol(int y);
+        bool isFirstCol(int y);
 
     private:    
-        const static int rows = 512, cols = 512;
         sf::Uint8 pixels[rows][4 * cols];
         sf::Uint8 apply[rows * cols * 4];
 

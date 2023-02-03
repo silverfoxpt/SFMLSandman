@@ -8,4 +8,6 @@ Element::Element(int x, int y, Block::BlockID id, Drawboard *drawboard) {
     this->color = Block::BlockInfo::blockColor[this->id];
 
     this->drawboard = drawboard;
+    this->boardRows = this->drawboard->rows;
+    this->boardCols = this->drawboard->cols;
 }

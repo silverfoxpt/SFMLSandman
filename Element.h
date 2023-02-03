@@ -18,10 +18,11 @@ class Element {
 
         virtual void step() = 0;
 
-        bool isSolid();
-        
+        virtual bool isSolid() = 0;
 
     protected:
         Drawboard *drawboard;
+        int boardRows;
+        int boardCols;
 };
 #endif

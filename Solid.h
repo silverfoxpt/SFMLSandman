@@ -9,6 +9,8 @@ class Solid : public Element {
         Solid(int x, int y, Block::BlockID id, Drawboard *drawboard) : Element(x, y, id, drawboard) {
             //nothing here...   
         }
+
+        bool isSolid() override;
 };
 
 #endif

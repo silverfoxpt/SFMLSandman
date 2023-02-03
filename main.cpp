@@ -24,15 +24,17 @@ void Test() {
     std::cout << tmp2->x << " " << tmp2->y << " " << tmp2->checker << '\n';
 }
 
+void Test2() {
+    myBoard.Test();
+    myBoard.ApplyToArray();
+}
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!");
 
-    myBoard.Test();
-    myBoard.ApplyToArray();
-    sf::Sprite spr = myBoard.ConvertToSprite();
-
     Test();
+    Test2(); sf::Sprite spr = myBoard.ConvertToSprite();
 
     while (window.isOpen())
     {
