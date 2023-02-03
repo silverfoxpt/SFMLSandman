@@ -26,7 +26,8 @@ class Drawboard {
         Drawboard();
 
         void Test();
-        void ConvertArrayTo1D();
+        void Convert2DPointerTo2DArray();
+        void Convert2DArrayTo1DArray();
         sf::Sprite ConvertToSprite();
 
         std::shared_ptr<Element> getElement(int x, int y);

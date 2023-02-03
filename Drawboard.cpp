@@ -48,7 +48,19 @@ void Drawboard::Test() {
     }
 }
 
-void Drawboard::ApplyToArray() {
+void Drawboard::Convert2DPointerTo2DArray() {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            auto inf = this->getElement(i, j).get(); if (inf == nullptr) {continue;}
+            this->pixels[i][j*4]        = inf->color.r;
+            this->pixels[i][j*4+1]      = inf->color.g;
+            this->pixels[i][j*4+2]      = inf->color.b;
+            this->pixels[i][j*4+3]      = inf->color.a;
+        }
+    }
+}
+
+void Drawboard::Convert2DArrayTo1DArray() {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             int x = cols * 4 * i + j * 4;

@@ -26,7 +26,7 @@ void Test() {
 
 void Test2() {
     myBoard.Test();
-    myBoard.ApplyToArray();
+    myBoard.Convert2DArrayTo1DArray();
 }
 
 int main()
