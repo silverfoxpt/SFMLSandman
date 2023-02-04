@@ -95,3 +95,16 @@ bool Drawboard::isLastCol(int y) {
 bool Drawboard::isFirstCol(int y) {
     return y == 0;
 }
+
+void Drawboard::StepAll() {
+    for (int i = rows-1; i >= 0; i--) {
+        for (int j = 0; j < cols; j++) {
+            auto ptr = this->getElement(i, j);         
+            if (ptr == nullptr) {continue;}
+            
+            //MovableSolid* tmp = dynamic_cast<MovableSolid*>(ptr.get());
+            //tmp->step();
+            ptr.get()->step();
+        }
+    }
+}

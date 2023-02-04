@@ -39,6 +39,9 @@ class Drawboard {
         bool isLastCol(int y);
         bool isFirstCol(int y);
 
+        //manipulating board
+        void StepAll();
+
     private:    
         sf::Uint8 pixels[rows][4 * cols];
         sf::Uint8 apply[rows * cols * 4];

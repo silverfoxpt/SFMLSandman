@@ -52,6 +52,7 @@ int main()
 
         //do shit here
         window.draw(spr);
+        myBoard.StepAll();
 
         window.display();
     }
