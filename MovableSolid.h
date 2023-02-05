@@ -10,6 +10,8 @@ class MovableSolid : public Solid{
         }
 
         void step() override;
+    
+    private:
 };
 
 #endif

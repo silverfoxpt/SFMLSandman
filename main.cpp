@@ -4,17 +4,28 @@
 #include <vector>
 #include <map>
 #include <memory>
+#include <chrono>
 
 #include "Drawboard.h"
 
-#include "Element.h"
-#include "MovableSolid.h"
 #include "Sand.h"
+#include "Pen.h"
 
 //public vars
+sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!");
+sf::Sprite mainRenderSprite;
+
 Drawboard myBoard;
-int boardPosX = 150;
-int boardPosY = 100;
+int boardPosX = 0;
+int boardPosY = 0;
+
+int penSize = 10;
+Block::BlockID penID = Block::BlockID::SAND;
+Pen myPen(penSize, penID, &myBoard);
+
+std::chrono::high_resolution_clock::time_point start;
+std::chrono::high_resolution_clock::time_point end;
+float fps;
 
 void Test() {
     //test
@@ -30,6 +41,7 @@ void Test() {
     //MovableSolid* tmp2 = dynamic_cast<MovableSolid*>(myBoard.getElement(102, 301).get());
     //std::cout << tmp2->x << " " << tmp2->y << " " << tmp2->checker << '\n';
 
+    //test 2
     Sand tmp(100, 100, Block::BlockID::SAND, &myBoard);
     std::shared_ptr<Element> ptr = std::make_shared<MovableSolid>(tmp);
 
@@ -52,33 +64,59 @@ void UpdateBoard() {
     myBoard.Convert2DArrayTo1DArray();
 }
 
+void RenderSimulation() {
+    //do shit here
+    window.draw(mainRenderSprite);
+    
+    myBoard.StepAll();
+    Test();
+    UpdateBoard(); mainRenderSprite = myBoard.ConvertToSprite();
+    mainRenderSprite.setPosition(boardPosX, boardPosY);
+}
+
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!");
-
-    //Test();
-    UpdateBoard(); sf::Sprite spr = myBoard.ConvertToSprite();
+    UpdateBoard(); mainRenderSprite = myBoard.ConvertToSprite();
 
     while (window.isOpen())
     {
+        start = std::chrono::high_resolution_clock::now();
+
+        //event stuff
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
-                window.close();
+            switch(event.type) {
+                case sf::Event::Closed:
+                    window.close();
+                    break;
+                case sf::Event::MouseButtonPressed: {
+                    if (event.mouseButton.button == sf::Mouse::Left) {
+                        sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
+                        sf::Vector2f worldPos = window.mapPixelToCoords(pixelPos);
+
+                        int x = worldPos.x;
+                        int y = worldPos.y;
+
+                        x -= boardPosX; y -= boardPosY;
+                        myPen.Draw(y, x);
+                    }
+                    break;
+                }                    
+                default:
+                    break;
+            }
         }
 
-        window.clear();
-
-        //do shit here
-        window.draw(spr);
-        
-        myBoard.StepAll();
-        Test();
-        UpdateBoard(); spr = myBoard.ConvertToSprite();
-        spr.setPosition(boardPosX, boardPosY);
-
+        //render stuff
+        window.clear(sf::Color(50, 50, 50, 255));
+        RenderSimulation();
         window.display();
+
+        //time stuff
+        end = std::chrono::high_resolution_clock::now();
+        fps = (float)1e9/(float)std::chrono::duration_cast<std::chrono::nanoseconds>(end-start).count();
+        std::cout << fps << '\n';
     }
 
     return 0;

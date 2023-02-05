@@ -6,8 +6,8 @@ std::shared_ptr<Element> BlockCreator::CreateElement(int x, int y, Block::BlockI
     switch (id)
     {
         case(Block::BlockID::SAND): {
-            //Sand tmp(x, y, id, board);
-            //ptr = std::make_shared<Sand>(tmp);
+            Sand tmp(x, y, id, board);
+            ptr = std::make_shared<Sand>(tmp);
             break;
         }
         

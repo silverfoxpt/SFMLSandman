@@ -2,8 +2,8 @@
 #define H_ELEMENT
 
 #include <SFML/Graphics.hpp>
-#include "BlockInfo.h"
-#include "Drawboard.h"
+#include "../BlockInfo.h"
+#include "../Drawboard.h"
 
 class Drawboard;
 

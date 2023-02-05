@@ -2,16 +2,17 @@
 #define H_PEN
 
 #include "Drawboard.h"
+#include "BlockCreator.h"
 
 class Pen {
     public:
         int size;
-        int type;
+        Block::BlockID type;
 
-        Pen(int size, int type, Drawboard *board);
+        Pen(int size, Block::BlockID type, Drawboard *board);
 
         void setSize(int x);
-        void setType(int x);
+        void setType(Block::BlockID x);
 
         void Draw(int posX, int posY);
 

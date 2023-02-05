@@ -1,7 +1,7 @@
 #ifndef H_SOLID
 #define H_SOLID
 
-#include "Element.h"
+#include "Blocks Header/Element.h"
 #include "BlockInfo.h"
 
 class Solid : public Element {
