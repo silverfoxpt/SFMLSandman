@@ -41,6 +41,7 @@ class Drawboard {
 
         //manipulating board
         void StepAll();
+        void Swap(int x1, int y1, int x2, int y2);
 
     private:    
         sf::Uint8 pixels[rows][4 * cols];

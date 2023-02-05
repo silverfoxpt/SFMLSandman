@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "BlockInfo.h"
 #include "Drawboard.h"
+
 class Drawboard;
 
 class Element {
@@ -16,9 +17,8 @@ class Element {
 
         Element(int x, int y, Block::BlockID id, Drawboard *drawboard);
 
-        virtual void step() = 0;
-
-        virtual bool isSolid() = 0;
+        virtual void step()     = 0;
+        virtual bool isSolid()  = 0;
 
     protected:
         Drawboard *drawboard;
