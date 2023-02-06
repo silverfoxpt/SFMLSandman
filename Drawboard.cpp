@@ -105,7 +105,7 @@ bool Drawboard::isFirstCol(int y) {
 
 void Drawboard::StepAll() {
     for (int i = rows-1; i >= 0; i--) {
-        for (int j = 0; j < cols; j++) {
+        for (int j = cols-1; j >= 0; j--) {
             std::shared_ptr<Element> ptr = this->getElement(i, j);
             if (ptr == nullptr) { continue;}
             

@@ -1,7 +1,8 @@
 #ifndef H_BLOCKCREATE
 #define H_BLOCKCREATE
 
-#include "Sand.h"
+#include "Blocks Header/Solid Header/Movable Solid Header/Sand.h"
+#include "Blocks Header/Liquid Header/Liquid.h"
 
 class BlockCreator {
     public:

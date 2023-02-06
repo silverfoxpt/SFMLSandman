@@ -1,8 +1,8 @@
 #ifndef H_SOLID
 #define H_SOLID
 
-#include "Blocks Header/Element.h"
-#include "BlockInfo.h"
+#include "../Element.h"
+#include "../../BlockInfo.h"
 
 class Solid : public Element {
     public:
@@ -11,6 +11,7 @@ class Solid : public Element {
         }
 
         bool isSolid() override;
+        bool isLiquid() override;
 };
 
 #endif

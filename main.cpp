@@ -8,7 +8,7 @@
 
 #include "Drawboard.h"
 
-#include "Sand.h"
+#include "Blocks Header/Solid Header/Movable Solid Header/Sand.h"
 #include "Pen.h"
 
 //public vars
@@ -20,7 +20,7 @@ int boardPosX = 0;
 int boardPosY = 0;
 
 int penSize = 10;
-Block::BlockID penID = Block::BlockID::SAND;
+Block::BlockID penID = Block::BlockID::WATER;
 Pen myPen(penSize, penID, &myBoard);
 
 std::chrono::high_resolution_clock::time_point start;

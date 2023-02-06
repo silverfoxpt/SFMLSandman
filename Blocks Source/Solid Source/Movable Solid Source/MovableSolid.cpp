@@ -1,4 +1,4 @@
-#include "MovableSolid.h"
+#include "../../../Blocks Header/Solid Header/Movable Solid Header/MovableSolid.h"
 
 void MovableSolid::step()  {
     int x = this->x, y = this->y;
@@ -8,7 +8,7 @@ void MovableSolid::step()  {
     
     //check down
     std::shared_ptr<Element> down = this->drawboard->getElement(x+1, y); 
-    if (down == nullptr) { //swap
+    if (down == nullptr || down.get()->isLiquid()) { //swap
         this->drawboard->Swap(x, y, x+1, y);
         return;
     }   
@@ -16,7 +16,7 @@ void MovableSolid::step()  {
     //check left
     if (!this->drawboard->isFirstCol(y)) {
         std::shared_ptr<Element> left = this->drawboard->getElement(x+1, y-1);
-        if (left == nullptr) { //swap
+        if (left == nullptr || left.get()->isLiquid()) { //swap
             this->drawboard->Swap(x, y, x+1, y-1);
             return;
         }
@@ -25,7 +25,7 @@ void MovableSolid::step()  {
     //check right
     if (!this->drawboard->isLastCol(y)) {
         std::shared_ptr<Element> right = this->drawboard->getElement(x+1, y+1);
-        if (right == nullptr) { //swap
+        if (right == nullptr || right.get()->isLiquid()) { //swap
             this->drawboard->Swap(x, y, x+1, y+1);
             return;
         }

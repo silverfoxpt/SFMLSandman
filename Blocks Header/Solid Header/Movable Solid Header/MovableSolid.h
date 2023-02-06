@@ -1,7 +1,7 @@
 #ifndef H_MOVABLESOLID
 #define H_MOVABLESOLID
 
-#include "Solid.h"
+#include "../Solid.h"
 
 class MovableSolid : public Solid{
     public:

@@ -9,7 +9,8 @@
 
 namespace Block {
     enum BlockID {
-        SAND
+        SAND,
+        WATER
     };
 
     class BlockInfo {

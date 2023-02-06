@@ -19,6 +19,7 @@ class Element {
 
         virtual void step()     = 0;
         virtual bool isSolid()  = 0;
+        virtual bool isLiquid() = 0;
 
     protected:
         Drawboard *drawboard;

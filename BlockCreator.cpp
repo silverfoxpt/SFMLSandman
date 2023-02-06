@@ -10,6 +10,11 @@ std::shared_ptr<Element> BlockCreator::CreateElement(int x, int y, Block::BlockI
             ptr = std::make_shared<Sand>(tmp);
             break;
         }
+        case(Block::BlockID::WATER): {
+            Liquid tmp(x, y, id, board);
+            ptr = std::make_shared<Liquid>(tmp);
+            break;
+        }
         
         default: {std::cout << "Error: block not found."; break;}
     }
