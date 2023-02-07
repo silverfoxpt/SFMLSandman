@@ -11,8 +11,8 @@ std::shared_ptr<Element> BlockCreator::CreateElement(int x, int y, Block::BlockI
             break;
         }
         case(Block::BlockID::WATER): {
-            Liquid tmp(x, y, id, board);
-            ptr = std::make_shared<Liquid>(tmp);
+            Water tmp(x, y, id, board);
+            ptr = std::make_shared<Water>(tmp);
             break;
         }
         
