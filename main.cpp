@@ -20,7 +20,7 @@ int boardPosX = 0;
 int boardPosY = 0;
 
 int penSize = 10;
-Block::BlockID penID = Block::BlockID::WATER;
+Block::BlockID penID = Block::BlockID::SAND;
 Pen myPen(penSize, penID, &myBoard);
 
 std::chrono::high_resolution_clock::time_point start;
@@ -31,8 +31,8 @@ void Test() {
     //test
     /*for (int i = 100; i < 200; i++) {
         for (int j = 100; j < 200; j++) {
-            MovableSolid tmp(i, j, Block::BlockID::Sand, &myBoard);
-            std::shared_ptr<Element> ptr = std::make_shared<MovableSolid>(tmp);
+            Sand tmp(i, j, Block::BlockID::SAND, &myBoard);
+            std::shared_ptr<Element> ptr = std::make_shared<Sand>(tmp);
 
             myBoard.setElement(i, j, ptr);
         }
@@ -99,7 +99,8 @@ int main()
                         int y = worldPos.y;
 
                         x -= boardPosX; y -= boardPosY;
-                        myPen.Draw(y, x);
+                        myPen.Draw(y, x);   
+                        //std::cout << "Clicked: " << x << " " << y << '\n';
                     }
                     break;
                 }                    

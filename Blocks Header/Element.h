@@ -19,7 +19,7 @@ class Element {
         Element(int x, int y, Block::BlockID id, Drawboard *drawboard);
 
         virtual void step()     = 0;
-        virtual void actOnNeighbor(int newX, int newY) = 0;
+        //virtual void actOnNeighbor(int newX, int newY) = 0;
 
         virtual bool isSolid()  = 0;
         virtual bool isLiquid() = 0;
