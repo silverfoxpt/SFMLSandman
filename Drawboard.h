@@ -42,6 +42,13 @@ class Drawboard {
         //manipulating board
         void StepAll();
         void Swap(int x1, int y1, int x2, int y2);
+        void Override(int x1, int y1, sf::Vector2i coordToOverrid);
+
+        //physic stuff 
+        sf::Vector2i convertPhysicToMatrix(int physX, int physY);
+        void SwapPhysic(int physX1, int physY1, int physX2, int physY2);
+        void OverridePhysic(int physX1, int physY1, int physX2, int physY2);
+        std::shared_ptr<Element> GetByPhysic(int physX1, int physX2);
 
     private:    
         sf::Uint8 pixels[rows][4 * cols];

@@ -134,3 +134,54 @@ void Drawboard::Swap(int x1, int y1, int x2, int y2) {
     setElement(x1, y1, sec);
     setElement(x2, y2, first);
 }
+
+void Drawboard::Override(int x1, int y1, sf::Vector2i overrideCoords) {
+    std::shared_ptr<Element> first  = getElement(x1, y1);
+    if (first != nullptr) {
+        Element* tmp = first.get();
+        tmp->x = overrideCoords.x;
+        tmp->y = overrideCoords.y;
+    }
+
+    this->setElement(overrideCoords.x, overrideCoords.y, first); //override anything in overrideCoords coords
+    this->setElement(x1, y1, nullptr); //clear original coords
+}
+
+sf::Vector2i Drawboard::convertPhysicToMatrix(int physX, int physY) {
+    if (physX < 1 || physY < 1 || physX > this->cols || physY > this->rows) {
+        return sf::Vector2i(-9999, -9999); //default
+    }
+    return sf::Vector2i(this->rows - physY, physX - 1);
+}
+
+void Drawboard::SwapPhysic(int physX1, int physY1, int physX2, int physY2) {
+    sf::Vector2i firstCoord     = this->convertPhysicToMatrix(physX1, physY1);
+    sf::Vector2i secCoord       = this->convertPhysicToMatrix(physX2, physY2);
+    if (firstCoord.x == -9999 || secCoord.x == -9999) {
+        std::cout << "Matrix coordinates not found. Warning - SwapPhysic";
+        return;
+    }
+
+    this->Swap(firstCoord.x, firstCoord.y, secCoord.x, secCoord.y);
+}
+
+void Drawboard::OverridePhysic(int physX1, int physY1, int physX2, int physY2) {
+    sf::Vector2i firstCoord     = this->convertPhysicToMatrix(physX1, physY1);
+    sf::Vector2i secCoord       = this->convertPhysicToMatrix(physX2, physY2);
+    if (firstCoord.x == -9999 || secCoord.x == -9999) {
+        std::cout << "Matrix coordinates not found. Warning - OverridePhysic";
+        return;
+    }
+
+    this->Override(firstCoord.x, firstCoord.y, sf::Vector2i(secCoord.x, secCoord.y));
+}
+
+std::shared_ptr<Element> Drawboard::GetByPhysic(int physX1, int physY1) {
+    sf::Vector2i coords = this->convertPhysicToMatrix(physX1, physY1);
+    if (coords.x == -9999) {
+        std::cout << "Matrix coordinates not found. Warning - GetByPhysic";
+        return nullptr;
+    }
+
+    return this->getElement(coords.x, coords.y);
+}

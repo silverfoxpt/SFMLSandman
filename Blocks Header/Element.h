@@ -2,8 +2,10 @@
 #define H_ELEMENT
 
 #include <SFML/Graphics.hpp>
+#include "../Randomizer.h"
 #include "../BlockInfo.h"
 #include "../Drawboard.h"
+#include "../Math.h"
 
 class Drawboard;
 
@@ -17,6 +19,7 @@ class Element {
 
         bool isFreeFalling;
         float frictionFactor;
+        float inertialResistance;
 
         sf::Color color;
         Block::BlockID id;
@@ -24,15 +27,16 @@ class Element {
         Element(int x, int y, Block::BlockID id, Drawboard *drawboard);
 
         virtual void step()     = 0;
-        //virtual void actOnNeighbor(int newX, int newY) = 0;
+        virtual bool actOnNeighbor(std::shared_ptr<Element> neighbor, int neighborPhysX, int neighborPhysY, bool isFinal, bool isFirst, int depth, sf::Vector2i lastLocation);
+        virtual void setAdjacentNeighborFreeFalling(sf::Vector2i lastValidLocation, int depth);
 
         virtual bool isSolid()  = 0;
         virtual bool isLiquid() = 0;
 
         int getPhysicX();
-        int getPhysicY();
+        int getPhysicY();       
 
-        sf::Vector2i convertPhysicToMatrix(int physX, int physY);
+        void setElementToFreeFalling(); 
 
     protected:
         Drawboard *drawboard;
