@@ -85,7 +85,15 @@ bool MovableSolid::actOnNeighbor(std::shared_ptr<Element> neighbor, int neighbor
     }
 
     else if (neighbor.get()->isLiquid()) {
-        
+        this->isFreeFalling = true;
+        if (depth > 0) {
+            //this->setAdjacentNeighborFreeFalling(lastLocation, depth); //stupid shit
+            this->drawboard->SwapPhysic(this->getPhysicX(), this->getPhysicY(), neighborPhysX, neighborPhysY);
+            return false;
+        } else {
+            
+            return true;
+        }
     }
 }
 
