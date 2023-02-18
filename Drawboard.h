@@ -49,6 +49,7 @@ class Drawboard {
         void SwapPhysic(int physX1, int physY1, int physX2, int physY2);
         void OverridePhysic(int physX1, int physY1, int physX2, int physY2);
         std::shared_ptr<Element> GetByPhysic(int physX1, int physX2);
+        void SwapPhysicTriple(int physX1, int physY1, int physX2, int physY2, int physX3, int physY3);
 
     private:    
         sf::Uint8 pixels[rows][4 * cols];

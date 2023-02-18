@@ -185,3 +185,9 @@ std::shared_ptr<Element> Drawboard::GetByPhysic(int physX1, int physY1) {
 
     return this->getElement(coords.x, coords.y);
 }
+
+void Drawboard::SwapPhysicTriple(int physX1, int physY1, int physX2, int physY2, int physX3, int physY3) {
+    //coord1 to coord 2, coord 2 to coord 3, coord 3 to coord 1
+    this->SwapPhysic(physX1, physY1, physX2, physY2);
+    this->SwapPhysic(physX1, physY1, physX3, physY3);
+}

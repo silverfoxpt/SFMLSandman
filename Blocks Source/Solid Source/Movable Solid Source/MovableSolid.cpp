@@ -91,9 +91,43 @@ bool MovableSolid::actOnNeighbor(std::shared_ptr<Element> neighbor, int neighbor
             this->drawboard->SwapPhysic(this->getPhysicX(), this->getPhysicY(), neighborPhysX, neighborPhysY);
             return false;
         } else {
-            
+            this->drawboard->SwapPhysicTriple(this->getPhysicX(), this->getPhysicY(), neighborPhysX, neighborPhysY,
+                lastLocation.x, lastLocation.y);
             return true;
         }
+    }
+
+    else if (neighbor.get()->isSolid()) {
+        if (depth > 0) {
+            return true;
+        }
+        if (isFinal) {
+            this->drawboard->OverridePhysic(this->getPhysicX(), this->getPhysicY(), lastLocation.x, lastLocation.y);
+        }
+
+        //transfer some vertical into horizontal force
+        if (this->isFreeFalling) {
+            float absY = Math::max(Math::abs(vel.y) / 31, 105);
+            this->vel.x = (this->vel.x < 0) ? -absY : absY;
+        }
+        
+        //get integer velocity
+        sf::Vector2f norm = Math::normalize(this->vel);
+
+        int additionalX = Math::abs(norm.x) > 0.1 
+            ? (norm.x < 0 ? Math::ceil(norm.x) : Math::floor(norm.x))
+            : (0);
+        int additionalY = Math::abs(norm.y) > 0.1 
+            ? (norm.y < 0 ? Math::ceil(norm.y) : Math::floor(norm.y))
+            : (0);
+
+        //add some friction
+        vel.x *= this->frictionFactor * neighbor.get()->frictionFactor;
+
+        //CHECK CLOSEST DIAGONAL NEIGHBOR
+        Element* diagonalNeighbor = this->drawboard->GetByPhysic(this->getPhysicX() + additionalX, this->getPhysicY() + additionalY).get();
+
+        
     }
 }
 
