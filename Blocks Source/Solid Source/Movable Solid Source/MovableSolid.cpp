@@ -127,10 +127,10 @@ bool MovableSolid::actOnNeighbor(std::shared_ptr<Element> neighbor, int neighbor
         sf::Vector2f norm = Math::normalize(this->vel);
 
         int additionalX = Math::abs(norm.x) > 0.1 
-            ? (norm.x < 0 ? Math::ceil(norm.x) : Math::floor(norm.x))
+            ? (norm.x < 0 ? Math::floor(norm.x) : Math::ceil(norm.x))
             : (0);
         int additionalY = Math::abs(norm.y) > 0.1 
-            ? (norm.y < 0 ? Math::ceil(norm.y) : Math::floor(norm.y))
+            ? (norm.y < 0 ? Math::floor(norm.y) : Math::ceil(norm.y))
             : (0);
 
         //add some friction
@@ -162,6 +162,7 @@ bool MovableSolid::actOnNeighbor(std::shared_ptr<Element> neighbor, int neighbor
                 this->vel.x *= -1;
                 this->drawboard->OverridePhysic(this->getPhysicX(), this->getPhysicY(), lastLocation.x, lastLocation.y);
             }
+            return true;
         }
     }
     return false;
