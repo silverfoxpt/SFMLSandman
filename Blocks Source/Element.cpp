@@ -29,3 +29,11 @@ int Element::getPhysicY() {
 void Element::setElementToFreeFalling() {
     this->isFreeFalling = Random::getRandomFloat() > this->inertialResistance ? true : false;
 }
+
+bool Element::actOnNeighbor(std::shared_ptr<Element> neighbor, int neighborPhysX, int neighborPhysY, bool isFinal, bool isFirst, int depth, sf::Vector2i lastLocation) {
+    return true;
+}
+
+void Element::setAdjacentNeighborFreeFalling(sf::Vector2i lastValidLocation, int depth) {
+    return;
+}

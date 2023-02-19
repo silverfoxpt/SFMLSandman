@@ -5,3 +5,5 @@ std::map<Block::BlockID, sf::Color> Block::BlockInfo::blockColor = {
     {WATER, sf::Color(37, 150, 190, 255)}
 };
 
+float Block::BlockInfo::frameUpdateRate = 1.0/60;
+

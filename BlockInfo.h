@@ -18,7 +18,7 @@ namespace Block {
             static std::map<BlockID, sf::Color> blockColor;
             
             //static sf::Vector2f normalGravity;
-            static constexpr float frameUpdateRate = 1/60;
+            static float frameUpdateRate;
     };
 }
 

@@ -1,7 +1,7 @@
 #include "../../../Blocks Header/Solid Header/Movable Solid Header/MovableSolid.h"
 
 void MovableSolid::step()  {
-    int x = this->x, y = this->y;
+    int x = this->x;
     if (this->drawboard->isLastRow(x)) {
         return;
     }
@@ -26,6 +26,9 @@ void MovableSolid::step()  {
         if (xInt >= 1) {
             xThreshold = 0;
         }
+    } else {
+        xInt = xVal;
+        xThreshold = 0;
     }
     if (yVal < 1) {
         this->yThreshold += yVal;
@@ -34,6 +37,9 @@ void MovableSolid::step()  {
         if (yInt >= 1) {
             yThreshold = 0;
         }
+    } else {
+        yInt = yVal;
+        yThreshold = 0;
     }
 
     //prepare for moving
@@ -59,6 +65,9 @@ void MovableSolid::step()  {
 
         int newX = this->getPhysicX() + xIncrease * xModifier;
         int newY = this->getPhysicY() + yIncrease * yModifier;
+        if (!this->drawboard->isPhysicBlockWithinBound(newX, newY)) {
+            return;   
+        }
         if (newX == this->getPhysicX() && newY == this->getPhysicY()) {
             continue;
         }
@@ -75,7 +84,8 @@ void MovableSolid::step()  {
 } 
 
 bool MovableSolid::actOnNeighbor(std::shared_ptr<Element> neighbor, int neighborPhysX, int neighborPhysY, bool isFinal, bool isFirst, int depth, sf::Vector2i lastLocation) {
-    if (neighbor == nullptr) { //empty
+    if (this->drawboard->isPhysicBlockAir(neighborPhysX, neighborPhysY)) { //is air
+        
         this->setAdjacentNeighborFreeFalling(lastLocation, depth);
         if (isFinal) {
             this->drawboard->SwapPhysic(this->getPhysicX(), this->getPhysicY(), neighborPhysX, neighborPhysY);
@@ -91,8 +101,10 @@ bool MovableSolid::actOnNeighbor(std::shared_ptr<Element> neighbor, int neighbor
             this->drawboard->SwapPhysic(this->getPhysicX(), this->getPhysicY(), neighborPhysX, neighborPhysY);
             return false;
         } else {
-            this->drawboard->SwapPhysicTriple(this->getPhysicX(), this->getPhysicY(), neighborPhysX, neighborPhysY,
-                lastLocation.x, lastLocation.y);
+            this->drawboard->SwapPhysicTriple(this->getPhysicX(), this->getPhysicY(), 
+                neighborPhysX, neighborPhysY,
+                lastLocation.x, lastLocation.y
+            );
             return true;
         }
     }
@@ -125,10 +137,34 @@ bool MovableSolid::actOnNeighbor(std::shared_ptr<Element> neighbor, int neighbor
         vel.x *= this->frictionFactor * neighbor.get()->frictionFactor;
 
         //CHECK CLOSEST DIAGONAL NEIGHBOR
-        Element* diagonalNeighbor = this->drawboard->GetByPhysic(this->getPhysicX() + additionalX, this->getPhysicY() + additionalY).get();
+        int diagX = this->getPhysicX() + additionalX;
+        int diagY = this->getPhysicY() + additionalY;
+        std::shared_ptr<Element> diag = this->drawboard->GetByPhysic(diagX, diagY);
 
-        
+        if (this->drawboard->isPhysicBlockAir(diagX, diagY) || diag != nullptr) {
+            bool stoppedDiagonally = this->actOnNeighbor(diag, diagX, diagY, true, false, depth+1, lastLocation);
+            if (!stoppedDiagonally) {
+                this->isFreeFalling = true;
+                return true;
+            }
+        }
+
+        //CHECK CLOSEST ADJACENT NEIGHBOR
+        int adjX = this->getPhysicX() + additionalX;
+        int adjY = this->getPhysicY();
+        std::shared_ptr<Element> adj = this->drawboard->GetByPhysic(adjX, adjY);
+
+        if (this->drawboard->isPhysicBlockAir(adjX, adjY) || adj != nullptr) {
+            bool stoppedAdjacent = this->actOnNeighbor(adj, adjX, adjY, true, false, depth+1, lastLocation);
+            this->isFreeFalling = false;
+
+            if (stoppedAdjacent) {
+                this->vel.x *= -1;
+                this->drawboard->OverridePhysic(this->getPhysicX(), this->getPhysicY(), lastLocation.x, lastLocation.y);
+            }
+        }
     }
+    return false;
 }
 
 void MovableSolid::setAdjacentNeighborFreeFalling(sf::Vector2i lastValidLocation, int depth) {

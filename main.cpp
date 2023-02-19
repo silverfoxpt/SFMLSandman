@@ -69,7 +69,7 @@ void RenderSimulation() {
     window.draw(mainRenderSprite);
     
     myBoard.StepAll();
-    Test();
+    //Test();
     UpdateBoard(); mainRenderSprite = myBoard.ConvertToSprite();
     mainRenderSprite.setPosition(boardPosX, boardPosY);
 }

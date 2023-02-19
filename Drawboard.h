@@ -51,6 +51,12 @@ class Drawboard {
         std::shared_ptr<Element> GetByPhysic(int physX1, int physX2);
         void SwapPhysicTriple(int physX1, int physY1, int physX2, int physY2, int physX3, int physY3);
 
+        //dumb testing stuff that should DEFINITELY BE REPLACED
+        bool isPhysicBlockAir(int physX, int physY);
+        
+        //checking stuff
+        bool isPhysicBlockWithinBound(int physX, int physY);
+
     private:    
         sf::Uint8 pixels[rows][4 * cols];
         sf::Uint8 apply[rows * cols * 4];

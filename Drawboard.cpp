@@ -191,3 +191,22 @@ void Drawboard::SwapPhysicTriple(int physX1, int physY1, int physX2, int physY2,
     this->SwapPhysic(physX1, physY1, physX2, physY2);
     this->SwapPhysic(physX1, physY1, physX3, physY3);
 }
+
+bool Drawboard::isPhysicBlockAir(int physX, int physY) {
+    sf::Vector2i coords = this->convertPhysicToMatrix(physX, physY);
+    if (coords.x == -9999) { //out of bounds
+        return false;
+    }
+
+    //if it's 1. inbound and 2. is nullptr then it's an empty cell!
+    return (this->GetByPhysic(physX, physY) == nullptr); 
+}
+
+bool Drawboard::isPhysicBlockWithinBound(int physX, int physY) {
+    sf::Vector2i coords = this->convertPhysicToMatrix(physX, physY);
+    if (coords.x == -9999) { //out of bounds
+        return false;
+    }
+
+    return true;
+}
