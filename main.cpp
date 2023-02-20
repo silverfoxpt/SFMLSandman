@@ -117,7 +117,7 @@ int main()
         //time stuff
         end = std::chrono::high_resolution_clock::now();
         fps = (float)1e9/(float)std::chrono::duration_cast<std::chrono::nanoseconds>(end-start).count();
-        std::cout << fps << '\n';
+        //std::cout << fps << '\n';
     }
 
     return 0;

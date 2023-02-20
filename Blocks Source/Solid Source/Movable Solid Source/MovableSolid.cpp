@@ -66,6 +66,7 @@ void MovableSolid::step()  {
         int newX = this->getPhysicX() + xIncrease * xModifier;
         int newY = this->getPhysicY() + yIncrease * yModifier;
         if (!this->drawboard->isPhysicBlockWithinBound(newX, newY)) {
+            this->drawboard->setElement(this->x, this->y, nullptr);
             return;   
         }
         if (newX == this->getPhysicX() && newY == this->getPhysicY()) {
@@ -85,10 +86,9 @@ void MovableSolid::step()  {
 
 bool MovableSolid::actOnNeighbor(std::shared_ptr<Element> neighbor, int neighborPhysX, int neighborPhysY, bool isFinal, bool isFirst, int depth, sf::Vector2i lastLocation) {
     if (this->drawboard->isPhysicBlockAir(neighborPhysX, neighborPhysY)) { //is air
-        
         this->setAdjacentNeighborFreeFalling(lastLocation, depth);
         if (isFinal) {
-            this->drawboard->SwapPhysic(this->getPhysicX(), this->getPhysicY(), neighborPhysX, neighborPhysY);
+            this->drawboard->OverridePhysic(this->getPhysicX(), this->getPhysicY(), neighborPhysX, neighborPhysY);
         }
         this->isFreeFalling = true;
         return false;
@@ -115,6 +115,7 @@ bool MovableSolid::actOnNeighbor(std::shared_ptr<Element> neighbor, int neighbor
         }
         if (isFinal) {
             this->drawboard->OverridePhysic(this->getPhysicX(), this->getPhysicY(), lastLocation.x, lastLocation.y);
+            return true;
         }
 
         //transfer some vertical into horizontal force
