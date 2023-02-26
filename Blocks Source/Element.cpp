@@ -11,7 +11,7 @@ Element::Element(int x, int y, Block::BlockID id, Drawboard *drawboard) {
     this->inertialResistance = 0.0;     //default
 
     this->id = id;
-    this->color = Block::BlockInfo::blockColor[this->id];
+    this->color = Block::BlockInfo::randomPickColor(this->id);
 
     this->drawboard = drawboard;
     this->boardRows = this->drawboard->rows;
@@ -27,7 +27,8 @@ int Element::getPhysicY() {
 }
 
 void Element::setElementToFreeFalling() {
-    this->isFreeFalling = Random::getRandomFloat() > this->inertialResistance ? true : false;
+    if (this->isFreeFalling == true) {return;}
+    this->isFreeFalling = (Random::getRandomFloat() > this->inertialResistance) ? true : false;
 }
 
 bool Element::actOnNeighbor(std::shared_ptr<Element> neighbor, int neighborPhysX, int neighborPhysY, bool isFinal, bool isFirst, int depth, sf::Vector2i lastLocation) {

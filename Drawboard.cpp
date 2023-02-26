@@ -104,17 +104,28 @@ bool Drawboard::isFirstCol(int y) {
 }
 
 void Drawboard::StepAll() {
-    for (int i = rows-1; i >= 0; i--) {
-        for (int j = cols-1; j >= 0; j--) {
-            std::shared_ptr<Element> ptr = this->getElement(i, j);
-            if (ptr == nullptr) { continue;}
-            
-            ptr.get()->step();
+    for (int i = this->rows - 1; i >= 0; i--) {
+        //int j = 0; j < this->cols; j++
+        if (i%2==0) {
+            for (int j = this->cols - 1; j >= 0; j--) {
+                std::shared_ptr<Element> ptr = this->getElement(i, j);
+                if (ptr == nullptr) { continue;}
+                
+                ptr.get()->step();
+            }
+        } else {
+            for (int j = 0; j < this->cols; j++) {
+                std::shared_ptr<Element> ptr = this->getElement(i, j);
+                if (ptr == nullptr) { continue;}
+                
+                ptr.get()->step();
+            }
         }
     }
 }
 
 void Drawboard::Swap(int x1, int y1, int x2, int y2) {
+    if (x1 == x2 && y1 == y2) {return;}
     std::shared_ptr<Element> first  = getElement(x1, y1);
     std::shared_ptr<Element> sec    = getElement(x2, y2);
 
@@ -136,6 +147,8 @@ void Drawboard::Swap(int x1, int y1, int x2, int y2) {
 }
 
 void Drawboard::Override(int x1, int y1, sf::Vector2i overrideCoords) {
+    if (x1 == overrideCoords.x && y1 == overrideCoords.y) {return;}
+
     std::shared_ptr<Element> first  = getElement(x1, y1);
     if (first != nullptr) {
         Element* tmp = first.get();
@@ -155,10 +168,12 @@ sf::Vector2i Drawboard::convertPhysicToMatrix(int physX, int physY) {
 }
 
 void Drawboard::SwapPhysic(int physX1, int physY1, int physX2, int physY2) {
+    if (physX1 == physX2 && physY1 == physY2) {return;}
+
     sf::Vector2i firstCoord     = this->convertPhysicToMatrix(physX1, physY1);
     sf::Vector2i secCoord       = this->convertPhysicToMatrix(physX2, physY2);
     if (firstCoord.x == -9999 || secCoord.x == -9999) {
-        std::cout << "Matrix coordinates not found. Warning - SwapPhysic";
+        //std::cout << "Matrix coordinates not found. Warning - SwapPhysic : ";
         return;
     }
 
@@ -166,10 +181,12 @@ void Drawboard::SwapPhysic(int physX1, int physY1, int physX2, int physY2) {
 }
 
 void Drawboard::OverridePhysic(int physX1, int physY1, int physX2, int physY2) {
+    if (physX1 == physX2 && physY1 == physY2) {return;}
+    
     sf::Vector2i firstCoord     = this->convertPhysicToMatrix(physX1, physY1);
     sf::Vector2i secCoord       = this->convertPhysicToMatrix(physX2, physY2);
     if (firstCoord.x == -9999 || secCoord.x == -9999) {
-        std::cout << "Matrix coordinates not found. Warning - OverridePhysic";
+        //std::cout << "Matrix coordinates not found. Warning - OverridePhysic\n";
         return;
     }
 
@@ -179,7 +196,7 @@ void Drawboard::OverridePhysic(int physX1, int physY1, int physX2, int physY2) {
 std::shared_ptr<Element> Drawboard::GetByPhysic(int physX1, int physY1) {
     sf::Vector2i coords = this->convertPhysicToMatrix(physX1, physY1);
     if (coords.x == -9999) {
-        std::cout << "Matrix coordinates not found. Warning - GetByPhysic";
+        //std::cout << "Matrix coordinates not found. Warning - GetByPhysic\n";
         return nullptr;
     }
 

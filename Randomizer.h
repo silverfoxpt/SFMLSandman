@@ -2,6 +2,12 @@
 #define H_RANDOM
 
 #include<random>    
+#include<iostream>
+
+#include <cstdlib> 
+#include <ctime>
+
+
 
 class Random {
     public: 
@@ -9,7 +15,8 @@ class Random {
         {
             static std::default_random_engine e;
             static std::uniform_real_distribution<> dis(0, 1); // rage [0 - 1)
-            return dis(e);
+            float x = dis(e); 
+            return x;
         }
 };
 

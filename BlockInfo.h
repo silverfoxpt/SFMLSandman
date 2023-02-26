@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 #include <memory>
+#include <vector>
+#include "Randomizer.h"
 
 //WARNING: NEVER, EVER INCLUDE ANY TYPE OF CUSTOM HEADER HERE. CROSS-REFERENCING WILL MAKE YOUR LIFE UTTERLY SHIT :)
 
@@ -15,10 +17,12 @@ namespace Block {
 
     class BlockInfo {
         public:
-            static std::map<BlockID, sf::Color> blockColor;
+            static std::map<BlockID, std::vector<sf::Color>> blockColor;
             
             //static sf::Vector2f normalGravity;
             static float frameUpdateRate;
+
+            static sf::Color randomPickColor(Block::BlockID id);
     };
 }
 
