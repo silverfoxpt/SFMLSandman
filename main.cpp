@@ -11,6 +11,9 @@
 #include "Blocks Header/Solid Header/Movable Solid Header/Sand.h"
 #include "Pen.h"
 
+#include "IMGui Stuffs/imgui.h"
+#include "IMGui Stuffs/imgui-SFML.h"
+
 //public vars
 sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!");
 sf::Sprite mainRenderSprite;
@@ -22,6 +25,8 @@ int boardPosY = 0;
 int penSize = 50;
 Block::BlockID penID = Block::BlockID::SAND;
 Pen myPen(penSize, penID, &myBoard);
+
+int UIPenID = 0;
 
 std::chrono::high_resolution_clock::time_point start;
 std::chrono::high_resolution_clock::time_point end;
@@ -69,15 +74,30 @@ void RenderSimulation() {
     window.draw(mainRenderSprite);
     
     myBoard.StepAll();
-    Test();
+    //Test();
     UpdateBoard(); mainRenderSprite = myBoard.ConvertToSprite();
     mainRenderSprite.setPosition(boardPosX, boardPosY);
 }
 
+void UIInputs() {
+    ImGui::Begin("Input");
+
+    ImGui::Text("Pen input");
+
+    ImGui::InputInt("Block type", &UIPenID); penID = Block::BlockInfo::intToId(UIPenID);
+    ImGui::InputInt("Pen size", &penSize);
+
+    myPen = Pen(penSize, penID, &myBoard);
+
+    ImGui::End();
+}
+
 int main()
 {
+    ImGui::SFML::Init(window);
     UpdateBoard(); mainRenderSprite = myBoard.ConvertToSprite();
 
+    sf::Clock deltaTime;
     while (window.isOpen())
     {
         start = std::chrono::high_resolution_clock::now();
@@ -86,6 +106,7 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
+            ImGui::SFML::ProcessEvent(window, event);
             switch(event.type) {
                 case sf::Event::Closed:
                     window.close();
@@ -110,8 +131,13 @@ int main()
         }
 
         //render stuff
+        ImGui::SFML::Update(window, deltaTime.restart());
         window.clear(sf::Color(50, 50, 50, 255));
+
         RenderSimulation();
+        UIInputs();
+        
+        ImGui::SFML::Render(window);
         window.display();
 
         //time stuff
@@ -120,5 +146,6 @@ int main()
         std::cout << fps << '\n';
     }
 
+    ImGui::SFML::Shutdown();
     return 0;
 }

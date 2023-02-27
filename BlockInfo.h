@@ -23,6 +23,7 @@ namespace Block {
             static float frameUpdateRate;
 
             static sf::Color randomPickColor(Block::BlockID id);
+            static BlockID intToId(int x);
     };
 }
 
