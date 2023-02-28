@@ -10,8 +10,15 @@ class Liquid: public Element {
         }
 
         void step() override;
+        bool actOnNeighbor(std::shared_ptr<Element> neighbor, int neighborPhysX, int neighborPhysY, bool isFinal, bool isFirst, int depth, sf::Vector2i lastLocation);
+        void setAdjacentNeighborFreeFalling(sf::Vector2i lastValidLocation, int depth);
+
         bool isSolid();
         bool isLiquid();
+
+        //variables
+        int density;
+        int dispersionRate;
 };
 
 #endif
